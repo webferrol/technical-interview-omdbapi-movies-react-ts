@@ -1,4 +1,4 @@
-# Technical interview for Juniors
+# Junior Developers Technical interview
 
 ## Enunciado 
 
