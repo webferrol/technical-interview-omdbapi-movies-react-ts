@@ -8,6 +8,24 @@ Crea una aplicación para buscar películas
 - <https://www.omdbapi.com/> 
 - API_KEY: Obtenerla
 
+## Variables de entorno
+
+Creamos un fichero .env que se añadirá a .gitignore
+
+`.env`
+
+```
+VITE_API_KEY=your-apikey
+VITE_API_URL=https://www.omdbapi.com/
+```
+
+Uso:
+
+```js
+console.log(import.meta.env.VITE_API_KEY);
+console.log(import.meta.env.VITE_API_URL);
+```
+
 ## Requerimientos
 
 - Necesita mostrar un input para buscar la película y un botón para buscar.

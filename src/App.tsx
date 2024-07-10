@@ -3,7 +3,7 @@ import './App.css'
 function App () {
   return (
     <>
-      First commit
+     {import.meta.env.VITE_API_KEY}
     </>
   )
 }
