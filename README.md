@@ -4,7 +4,7 @@
 
 Crea una aplicación para buscar películas
 
-## API a usar
+## API a usar (Recomiendo guardarla en las variables de entorno de github)
 - <https://www.omdbapi.com/> 
 - API_KEY: Obtenerla
 
