@@ -5,7 +5,7 @@ function Movies ({ movies }: { movies: IMovies[] | null}) {
   return (
         <section>
             <h2>Movies</h2>
-            <ul>
+            <ul className="movies">
             {
               movies?.map((movie: IMovies) => {
                 const { id } = movie

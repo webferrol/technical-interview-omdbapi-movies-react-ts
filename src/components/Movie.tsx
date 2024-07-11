@@ -1,9 +1,11 @@
-import { IMovies } from '../App'
+import { IMovies } from '../constants'
 
 function Movie ({ movieValue }: { movieValue: IMovies | undefined}) {
+  const isImage = movieValue?.img !== 'N/A'
+  if (!isImage) return
   return (
         <li>
-            {JSON.stringify(movieValue)}
+           <img src={movieValue?.img} alt={movieValue?.title} width="300" />
         </li>
   )
 }

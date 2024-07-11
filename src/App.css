@@ -5,6 +5,20 @@
   text-align: center;
 }
 
+.movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  list-style-type: none;
+  padding-left: 0;
+  img {
+    max-width: 100%;
+    object-fit: contain;
+    border: 2px solid red;
+  }
+  
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
