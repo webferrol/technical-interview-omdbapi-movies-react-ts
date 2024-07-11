@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react'
 
-function SearchComponent ({ onSearch } : { onSearch : (value: string) => void}) {
+function SearchComponent ({ loading, onSearch } : { loading: boolean, onSearch : (value: string) => void}) {
   const [search, setSearch] = useState('')
   const handleSubmit = (e:FormEvent) => {
     e.preventDefault()
@@ -18,8 +18,7 @@ function SearchComponent ({ onSearch } : { onSearch : (value: string) => void}) 
           <label>
             <input type="search" name="q" autoComplete="off" onInput={handleInput} />
           </label>
-          <input type="submit" value="Buscar" />
-          {search}
+          <input type="submit" value="Buscar" disabled={loading} />
         </form>
       </search>
   )

@@ -1,70 +1,44 @@
-import { useState } from 'react'
 import Movies from './components/Movies'
-import './App.css'
-import query from '../mocks/matrix-movie-search.json'
-// import query from '../mocks/movie-not-found.json'
 import NoTargetMovie from './components/NoTargetMovie'
 import SearchComponent from './components/SearchComponent'
+import useMovies from './hooks/useMovies'
+import './App.css'
+
+// import query from '../mocks/matrix-movie-search.json'
+// import query from '../mocks/movie-not-found.json'
 // import query from '../mocks/invalid-id.json'
 // import query from '../mocks/invalid-apikey.json'
 
-export interface IMovies {
-  title: string;
-  year: string;
-  id: string;
-  type: string;
-  img: string;
-}
-
-export interface SearchEntity {
-  Title: string;
-  Year: string;
-  imdbID: string;
-  Type: string;
-  Poster: string;
-}
-
-export interface Query {
-  Search?: (SearchEntity)[] | null;
-  totalResults?: string;
-  Response: string;
-  Error?: string;
-}
-
-const { Response, Search, Error, totalResults }: Query = query
-
-const endPointMovies: IMovies[] | null | undefined = Search?.map(movie => ({
-  id: movie.imdbID,
-  year: movie.Year,
-  title: movie.Title,
-  img: movie.Poster,
-  type: movie.Type
-}))
-
-console.log(totalResults)
-console.log(endPointMovies)
-// import.meta.env.VITE_API_KEY
-const isSuccess = Response === 'True'
-
 function App () {
-  const [movies, setMovies] = useState<IMovies[] | null>(null)
+  const {
+    getSearch,
+    isLoading,
+    isSuccess,
+    movieError,
+    movies,
+    setMovies
+  } = useMovies()
 
-  const handleSearch = (value: string) => {
+  const handleSearch = async (value: string) => {
     setMovies(null)
     if (!value.trim().length) return
-    const searchValue = endPointMovies?.filter((movie) => (movie.title.toLocaleLowerCase().includes(value.toLocaleLowerCase())))
-    if (searchValue?.length) setMovies(searchValue)
+    await getSearch(value.trim())
   }
 
   if (!isSuccess) {
     return (
-      <NoTargetMovie message={Error} />
+      <>
+      <SearchComponent loading={isLoading} onSearch={handleSearch} />
+      <NoTargetMovie message={movieError} />
+      {isLoading && 'Buscando...'}
+      </>
     )
   }
   return (
     <>
-      <SearchComponent onSearch={handleSearch} />
+      <SearchComponent loading={isLoading} onSearch={handleSearch} />
       <Movies movies={movies}/>
+      {isLoading && 'Buscando...'}
     </>
   )
 }

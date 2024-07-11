@@ -8,9 +8,9 @@ Crea una aplicación para buscar películas
 - <https://www.omdbapi.com/> 
 - API_KEY: Obtenerla
 
-## Variables de entorno
+## ⚠️⚠️⚠️⚠️⚠️⚠️ MODO DEVELOPER
 
-Creamos un fichero .env que se añadirá a .gitignore
+`Creamos un fichero .env que se añadirá a .gitignore`
 
 `.env`
 

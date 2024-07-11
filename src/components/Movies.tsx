@@ -1,4 +1,4 @@
-import { IMovies } from '../App'
+import { IMovies } from '../constants'
 import Movie from './Movie'
 
 function Movies ({ movies }: { movies: IMovies[] | null}) {
