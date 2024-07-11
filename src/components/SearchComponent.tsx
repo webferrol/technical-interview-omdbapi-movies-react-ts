@@ -14,8 +14,9 @@ function SearchComponent ({ loading, onSearch } : { loading: boolean, onSearch :
 
   return (
         <search role="search">
-        <form onSubmit={handleSubmit}>
-          <label>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+             Título
             <input type="search" name="q" autoComplete="off" onInput={handleInput} />
           </label>
           <input type="submit" value="Buscar" disabled={loading} />

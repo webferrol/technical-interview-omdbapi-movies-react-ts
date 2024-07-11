@@ -1,19 +1,15 @@
+import { MouseEvent } from 'react'
 import Movies from './components/Movies'
 import NoTargetMovie from './components/NoTargetMovie'
 import SearchComponent from './components/SearchComponent'
 import useMovies from './hooks/useMovies'
-import './App.css'
-
-// import query from '../mocks/matrix-movie-search.json'
-// import query from '../mocks/movie-not-found.json'
-// import query from '../mocks/invalid-id.json'
-// import query from '../mocks/invalid-apikey.json'
 
 function App () {
   const {
     getSearch,
     isLoading,
     isSuccess,
+    changeIsSuccess,
     movieError,
     movies,
     setMovies
@@ -25,15 +21,22 @@ function App () {
     await getSearch(value.trim())
   }
 
+  const handleBack = (event: MouseEvent) => {
+    event.preventDefault()
+    changeIsSuccess(true)
+  }
+
   if (!isSuccess) {
     return (
       <>
-      <SearchComponent loading={isLoading} onSearch={handleSearch} />
+
       <NoTargetMovie message={movieError} />
-      {isLoading && 'Buscando...'}
+      <a href="#" onClick={handleBack}>Volver</a>
+
       </>
     )
   }
+
   return (
     <>
       <SearchComponent loading={isLoading} onSearch={handleSearch} />

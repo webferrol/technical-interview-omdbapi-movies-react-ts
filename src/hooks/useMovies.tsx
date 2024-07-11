@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { getListMovies } from '../helpers/getListMovies'
-import { IMovies } from '../constants'
+import { IMovies } from '../types'
+import { moviesMapper } from '../helpers/movies-mapper'
 
 function useMovies () {
   const [isSuccess, setIsSuccess] = useState(true)
@@ -18,15 +19,8 @@ function useMovies () {
 
       setIsSuccess(res.Response === 'True')
 
-      const endPointMovies = res.Search?.map(movie => ({
-        id: movie.imdbID,
-        year: movie.Year,
-        title: movie.Title,
-        img: movie.Poster,
-        type: movie.Type
-      }))
-
-      setMovies(endPointMovies)
+      const searchedMovies = moviesMapper(res.Search)
+      setMovies(searchedMovies)
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message)
@@ -41,6 +35,7 @@ function useMovies () {
     getSearch,
     isLoading,
     isSuccess,
+    changeIsSuccess: setIsSuccess,
     movieError: error,
     movies,
     setMovies

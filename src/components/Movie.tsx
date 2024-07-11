@@ -1,11 +1,14 @@
-import { IMovies } from '../constants'
+import { IMovies } from '../types'
 
 function Movie ({ movieValue }: { movieValue: IMovies | undefined}) {
   const isImage = movieValue?.img !== 'N/A'
-  if (!isImage) return
+  const srcImage = isImage ? movieValue?.img : '/src/assets/image-not-found.jpg'
   return (
         <li>
-           <img src={movieValue?.img} alt={movieValue?.title} width="300" />
+            <figure>
+              <img src={srcImage} alt={movieValue?.title} title={movieValue?.year} width="300" />
+              <figcaption>{movieValue?.title} | {movieValue?.type}</figcaption>
+            </figure>
         </li>
   )
 }

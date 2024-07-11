@@ -1,4 +1,4 @@
-import { IMovies } from '../constants'
+import { IMovies } from '../types'
 import Movie from './Movie'
 
 function Movies ({ movies }: { movies: IMovies[] | null}) {

@@ -1,4 +1,4 @@
-import { Query } from '../constants'
+import { Query } from '../types'
 
 const API_KEY = import.meta.env.VITE_API_KEY
 
