@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import Movies from './components/Movies'
 import './App.css'
-// import query from '../mocks/matrix-movie-search.json'
+import query from '../mocks/matrix-movie-search.json'
 // import query from '../mocks/movie-not-found.json'
-import query from '../mocks/invalid-id.json'
+import NoTargetMovie from './components/NoTargetMovie'
+import SearchComponent from './components/SearchComponent'
+// import query from '../mocks/invalid-id.json'
 // import query from '../mocks/invalid-apikey.json'
 
 export interface IMovies {
@@ -31,29 +33,38 @@ export interface Query {
 
 const { Response, Search, Error, totalResults }: Query = query
 
-const movies: IMovies[] | undefined = Search?.map(movie => ({
+const endPointMovies: IMovies[] | null | undefined = Search?.map(movie => ({
   id: movie.imdbID,
   year: movie.Year,
   title: movie.Title,
   img: movie.Poster,
   type: movie.Type
 }))
+
+console.log(totalResults)
+console.log(endPointMovies)
 // import.meta.env.VITE_API_KEY
 const isSuccess = Response === 'True'
+
 function App () {
-  const [searchedMovies] = useState<IMovies[] | undefined>(movies)
+  const [movies, setMovies] = useState<IMovies[] | null>(null)
+
+  const handleSearch = (value: string) => {
+    setMovies(null)
+    if (!value.trim().length) return
+    const searchValue = endPointMovies?.filter((movie) => (movie.title.toLocaleLowerCase().includes(value.toLocaleLowerCase())))
+    if (searchValue?.length) setMovies(searchValue)
+  }
+
   if (!isSuccess) {
     return (
-      <>
-        { JSON.stringify(Search) }
-        { Error}
-      </>
+      <NoTargetMovie message={Error} />
     )
   }
   return (
     <>
-     <Movies movies={searchedMovies}/>
-     {totalResults}
+      <SearchComponent onSearch={handleSearch} />
+      <Movies movies={movies}/>
     </>
   )
 }
