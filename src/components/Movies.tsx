@@ -1,10 +1,18 @@
 import { IMovies } from '../App'
+import Movie from './Movie'
 
-function Movies ({ movies }: { movies: IMovies[] | undefined}) {
+function Movies ({ movies }: { movies: IMovies[] | null}) {
   return (
         <section>
             <h2>Movies</h2>
-            {JSON.stringify(movies)}
+            <ul>
+            {
+              movies?.map((movie: IMovies) => {
+                const { id } = movie
+                return (<Movie key={id} movieValue={movie}/>)
+              })
+            }
+            </ul>
         </section>
   )
 }
