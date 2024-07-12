@@ -1,15 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getListMovies } from '../helpers/getListMovies'
 import { IMovies } from '../types'
 import { moviesMapper } from '../helpers/movies-mapper'
 
 function useMovies () {
+  const [inputValue, setInputValue] = useState('')
   const [isSuccess, setIsSuccess] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [movies, setMovies] = useState<IMovies[] | null>(null)
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    const inputTimeOut = window.setTimeout(async () => {
+      await getSearch(inputValue)
+    }, 500)
+    return () => clearTimeout(inputTimeOut)
+  }, [inputValue])
+
   const getSearch = async (searchValue: string) => {
+    if (!searchValue.trim().length) return
     try {
       setIsLoading(true)
       const res = await getListMovies(searchValue.trim())
@@ -32,12 +41,12 @@ function useMovies () {
   }
 
   return {
-    getSearch,
     isLoading,
     isSuccess,
     changeIsSuccess: setIsSuccess,
     movieError: error,
     movies,
+    setInputValue,
     setMovies
   }
 }

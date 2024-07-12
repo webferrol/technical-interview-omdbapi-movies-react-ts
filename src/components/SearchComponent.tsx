@@ -1,15 +1,13 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
 
 function SearchComponent ({ onSearch } : { onSearch : (value: string) => void}) {
-  const [search, setSearch] = useState('')
   const handleSubmit = (e:FormEvent) => {
     e.preventDefault()
-    onSearch(search)
   }
 
   const handleInput = (e:FormEvent<HTMLInputElement>) => {
     const { currentTarget } = e
-    setSearch(currentTarget.value)
+    onSearch(currentTarget.value)
   }
 
   return (

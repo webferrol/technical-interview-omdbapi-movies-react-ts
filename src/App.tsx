@@ -6,35 +6,19 @@ import useMovies from './hooks/useMovies'
 
 function App () {
   const {
-    getSearch,
     isLoading,
     isSuccess,
     changeIsSuccess,
     movieError,
     movies,
+    setInputValue,
     setMovies
   } = useMovies()
 
-  const handleSearch = async (value: string) => {
+  const handleSearch = (value: string) => {
     setMovies(null)
     if (!value.trim().length) return
-    await getSearch(value.trim())
-  }
-
-  const handleBack = (event: MouseEvent) => {
-    event.preventDefault()
-    changeIsSuccess(true)
-  }
-
-  if (!isSuccess) {
-    return (
-      <>
-
-      <NoTargetMovie message={movieError} />
-      <a href="#" onClick={handleBack}>Volver</a>
-
-      </>
-    )
+    setInputValue(value.trim())
   }
 
   return (
@@ -42,6 +26,7 @@ function App () {
       <SearchComponent onSearch={handleSearch} />
       <Movies movies={movies}/>
       {isLoading && 'Buscando...'}
+      {!isSuccess && <NoTargetMovie message={movieError} />}
     </>
   )
 }
