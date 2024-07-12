@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react'
 
-function SearchComponent ({ loading, onSearch } : { loading: boolean, onSearch : (value: string) => void}) {
+function SearchComponent ({ onSearch } : { onSearch : (value: string) => void}) {
   const [search, setSearch] = useState('')
   const handleSubmit = (e:FormEvent) => {
     e.preventDefault()

@@ -39,7 +39,7 @@ function App () {
 
   return (
     <>
-      <SearchComponent loading={isLoading} onSearch={handleSearch} />
+      <SearchComponent onSearch={handleSearch} />
       <Movies movies={movies}/>
       {isLoading && 'Buscando...'}
     </>
