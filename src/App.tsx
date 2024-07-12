@@ -1,4 +1,3 @@
-import { MouseEvent } from 'react'
 import Movies from './components/Movies'
 import NoTargetMovie from './components/NoTargetMovie'
 import SearchComponent from './components/SearchComponent'
@@ -8,7 +7,6 @@ function App () {
   const {
     isLoading,
     isSuccess,
-    changeIsSuccess,
     movieError,
     movies,
     setInputValue,
