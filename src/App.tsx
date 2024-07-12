@@ -20,12 +20,13 @@ function App () {
   }
 
   return (
-    <>
+    <main>
+      <h1>Movies</h1>
       <SearchComponent onSearch={handleSearch} />
-      <Movies movies={movies}/>
+      <Movies movies={movies} />
       {isLoading && 'Buscando...'}
       {!isSuccess && <NoTargetMovie message={movieError} />}
-    </>
+    </main>
   )
 }
 
