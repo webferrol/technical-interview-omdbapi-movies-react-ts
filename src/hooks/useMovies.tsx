@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { getListMovies } from '../helpers/getListMovies'
 import { IMovies } from '../types'
 import { moviesMapper } from '../helpers/movies-mapper'
@@ -9,16 +9,21 @@ function useMovies () {
   const [isLoading, setIsLoading] = useState(false)
   const [movies, setMovies] = useState<IMovies[] | null>(null)
   const [error, setError] = useState('')
+  const isEmptyInput = useRef(true)
 
   useEffect(() => {
     const inputTimeOut = window.setTimeout(async () => {
       await getSearch(inputValue)
     }, 500)
     return () => clearTimeout(inputTimeOut)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue])
 
   const getSearch = async (searchValue: string) => {
-    if (!searchValue.trim().length) return
+    if (isEmptyInput.current) {
+      isEmptyInput.current = Boolean(inputValue.trim().length)
+      return
+    }
     try {
       setIsLoading(true)
       const res = await getListMovies(searchValue.trim())
