@@ -19,7 +19,6 @@ function SearchComponent ({ loading, onSearch } : { loading: boolean, onSearch :
              Título
             <input type="search" name="q" autoComplete="off" onInput={handleInput} />
           </label>
-          <input type="submit" value="Buscar" disabled={loading} />
         </form>
       </search>
   )
