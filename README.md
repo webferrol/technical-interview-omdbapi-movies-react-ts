@@ -28,9 +28,11 @@ console.log(import.meta.env.VITE_API_URL);
 
 ## Requerimientos
 
-- Necesita mostrar un input para buscar la película y un botón para buscar.
-- Lista las películas encontradas y muestra el título, año y poster.
-- Haz que las películas se muestren en un grid responsive.
+- [] Necesita mostrar un input para buscar la película y un botón para buscar.
+- [] Lista las películas encontradas y muestra el título, año y poster.
+- [] Haz que las películas se muestren en un grid responsive.
+- [] Mensaje de error si el campo `search` está vacío. Este mensaje no cargará al iniciar la app.
+- [] Ordenar las películas mediante un check por título.
 
 <details>
   <summary>
