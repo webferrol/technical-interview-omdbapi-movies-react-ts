@@ -1,6 +1,11 @@
-import { FormEvent } from 'react'
+import { ChangeEvent, FormEvent } from 'react'
 
-function SearchComponent ({ onSearch } : { onSearch : (value: string) => void}) {
+type Props = {
+  onSearch : (value: string) => void,
+  onSort: (event: ChangeEvent<HTMLInputElement>) => void
+}
+
+function SearchComponent ({ onSearch, onSort } : Props) {
   const handleSubmit = (e:FormEvent) => {
     e.preventDefault()
   }
@@ -17,6 +22,7 @@ function SearchComponent ({ onSearch } : { onSearch : (value: string) => void}) 
              Título
             <input type="search" name="q" autoComplete="off" onInput={handleInput} />
           </label>
+          <label>Ordenar<input type="checkbox" name="sort" onChange={onSort} /></label>
         </form>
       </search>
   )

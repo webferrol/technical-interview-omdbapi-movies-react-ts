@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react'
 import Movies from './components/Movies'
 import NoTargetMovie from './components/NoTargetMovie'
 import SearchComponent from './components/SearchComponent'
@@ -10,21 +11,25 @@ function App () {
     movieError,
     movies,
     setInputValue,
-    setMovies
+    setIsSorted
   } = useMovies()
 
   const handleSearch = (value: string) => {
-    setMovies(null)
-    if (!value.trim().length) return
     setInputValue(value.trim())
+  }
+
+  const handleSort = (e: ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.currentTarget
+    setIsSorted(checked)
   }
 
   return (
     <main>
       <h1>Movies</h1>
-      <SearchComponent onSearch={handleSearch} />
+      <SearchComponent onSearch={handleSearch} onSort={handleSort} />
       <Movies movies={movies} />
       {isLoading && 'Buscando...'}
+
       {!isSuccess && <NoTargetMovie message={movieError} />}
     </main>
   )

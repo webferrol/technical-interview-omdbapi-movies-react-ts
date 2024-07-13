@@ -7,9 +7,14 @@ function useMovies () {
   const [inputValue, setInputValue] = useState('')
   const [isSuccess, setIsSuccess] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
+  const [isSorted, setIsSorted] = useState(false)
   const [movies, setMovies] = useState<IMovies[] | null>(null)
   const [error, setError] = useState('')
   const isEmptyInput = useRef(true)
+
+  const sortMovies: IMovies[] | null | undefined = (isSorted && movies?.length)
+    ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
+    : movies
 
   useEffect(() => {
     const inputTimeOut = window.setTimeout(async () => {
@@ -24,10 +29,14 @@ function useMovies () {
       isEmptyInput.current = Boolean(inputValue.trim().length)
       return
     }
+
     try {
       setIsLoading(true)
+      setMovies(null)
+      setIsSuccess(false)
       const res = await getListMovies(searchValue.trim())
 
+      if (searchValue === '') throw new Error('Movie not found')
       if (res.Response === 'False') throw new Error(res.Error)
       if (!res.Search?.length) throw new Error(`Not found ${searchValue}`)
 
@@ -50,9 +59,9 @@ function useMovies () {
     isSuccess,
     changeIsSuccess: setIsSuccess,
     movieError: error,
-    movies,
+    movies: sortMovies,
     setInputValue,
-    setMovies
+    setIsSorted
   }
 }
 
