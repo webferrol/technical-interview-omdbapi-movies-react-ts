@@ -50,9 +50,9 @@ function useMovies () {
       setIsLoading(true)
       setMovies(null)
       setIsSuccess(true)
+      if (inputValue === '') throw new Error('Movie not found')
       const res = await getListMovies(inputValue.trim())
 
-      if (inputValue === '') throw new Error('Movie not found')
       if (res.Response === 'False') throw new Error(res.Error)
       if (!res.Search?.length) throw new Error(`Not found ${inputValue}`)
 
