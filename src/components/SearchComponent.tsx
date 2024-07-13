@@ -1,11 +1,12 @@
 import { ChangeEvent, FormEvent } from 'react'
 
 type Props = {
+  onReset: () => void,
   onSearch : (value: string) => void,
   onSort: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-function SearchComponent ({ onSearch, onSort } : Props) {
+function SearchComponent ({ onReset, onSearch, onSort } : Props) {
   const handleSubmit = (e:FormEvent) => {
     e.preventDefault()
   }
@@ -23,6 +24,7 @@ function SearchComponent ({ onSearch, onSort } : Props) {
             <input type="search" name="q" autoComplete="off" onInput={handleInput} />
           </label>
           <label>Ordenar<input type="checkbox" name="sort" onChange={onSort} /></label>
+          <input type="reset" onClick={() => onReset()} value="Reiniciar" />
         </form>
       </search>
   )

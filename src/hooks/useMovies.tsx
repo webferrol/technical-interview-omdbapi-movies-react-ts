@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { getListMovies } from '../helpers/getListMovies'
 import { IMovies } from '../types'
 import { moviesMapper } from '../helpers/movies-mapper'
@@ -12,19 +12,35 @@ function useMovies () {
   const [error, setError] = useState('')
   const isEmptyInput = useRef(true)
 
-  const sortMovies: IMovies[] | null | undefined = (isSorted && movies?.length)
-    ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
-    : movies
+  const clear = () => {
+    setError('')
+    setInputValue('')
+    setIsLoading(false)
+    setIsSorted(false)
+    setIsSuccess(true)
+    setMovies(null)
+    isEmptyInput.current = true
+  }
+
+  const sortMovies: IMovies[] | null | undefined = useMemo(
+    () => {
+      return (isSorted && inputValue.length && movies?.length)
+        ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
+        : movies
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [movies, isSorted]
+  )
 
   useEffect(() => {
     const inputTimeOut = window.setTimeout(async () => {
-      await getSearch(inputValue)
-    }, 500)
+      await getSearch()
+    }, 800)
     return () => clearTimeout(inputTimeOut)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue])
 
-  const getSearch = async (searchValue: string) => {
+  const getSearch = async () => {
     if (isEmptyInput.current) {
       isEmptyInput.current = Boolean(inputValue.trim().length)
       return
@@ -33,12 +49,12 @@ function useMovies () {
     try {
       setIsLoading(true)
       setMovies(null)
-      setIsSuccess(false)
-      const res = await getListMovies(searchValue.trim())
+      setIsSuccess(true)
+      const res = await getListMovies(inputValue.trim())
 
-      if (searchValue === '') throw new Error('Movie not found')
+      if (inputValue === '') throw new Error('Movie not found')
       if (res.Response === 'False') throw new Error(res.Error)
-      if (!res.Search?.length) throw new Error(`Not found ${searchValue}`)
+      if (!res.Search?.length) throw new Error(`Not found ${inputValue}`)
 
       setIsSuccess(res.Response === 'True')
 
@@ -55,6 +71,7 @@ function useMovies () {
   }
 
   return {
+    clear,
     isLoading,
     isSuccess,
     changeIsSuccess: setIsSuccess,
