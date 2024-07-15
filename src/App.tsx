@@ -3,6 +3,7 @@ import Movies from './components/Movies'
 import NoTargetMovie from './components/NoTargetMovie'
 import SearchComponent from './components/SearchComponent'
 import useMovies from './hooks/useMovies'
+import Seo from './components/Seo'
 
 function App () {
   const {
@@ -25,14 +26,16 @@ function App () {
   }
 
   return (
-    <main>
-      <h1>Movies</h1>
-      <SearchComponent onSearch={handleSearch} onSort={handleSort} onReset={clear} />
-      <Movies movies={movies} />
-      {isLoading && 'Buscando...'}
-
-      {!isSuccess && <NoTargetMovie message={movieError} />}
-    </main>
+    <>
+      <Seo />
+      <main>
+        <h1>Movies</h1>
+        <SearchComponent onSearch={handleSearch} onSort={handleSort} onReset={clear} />
+        <Movies movies={movies} />
+        {isLoading && 'Buscando...'}
+        {!isSuccess && <NoTargetMovie message={movieError} />}
+      </main>
+    </>
   )
 }
 
