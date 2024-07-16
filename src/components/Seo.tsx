@@ -1,7 +1,7 @@
-function Seo () {
+function Seo ({ title } : { title: string}) {
   return (
         <>
-            <title>API omdbapi.com</title>
+            <title>{`API omdbapi.com: ${title}`}</title>
         </>
   )
 }

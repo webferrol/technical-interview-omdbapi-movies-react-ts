@@ -8,7 +8,8 @@ import Seo from './components/Seo'
 function App () {
   const {
     clear,
-    isLoading,
+    inputValue,
+    isPending,
     isSuccess,
     movieError,
     movies,
@@ -27,12 +28,12 @@ function App () {
 
   return (
     <>
-      <Seo />
+      <Seo title={inputValue} />
       <main>
         <h1>Movies</h1>
         <SearchComponent onSearch={handleSearch} onSort={handleSort} onReset={clear} />
         <Movies movies={movies} />
-        {isLoading && 'Buscando...'}
+        {isPending && 'Buscando...'}
         {!isSuccess && <NoTargetMovie message={movieError} />}
       </main>
     </>
