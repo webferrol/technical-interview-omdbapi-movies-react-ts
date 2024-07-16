@@ -31,34 +31,38 @@ function useMovies () {
     [movies, isSorted]
   )
 
+  const searchMovies = async (): Promise<void> => {
+    if (isEmptyInput.current) {
+      isEmptyInput.current = Boolean(inputValue.trim().length)
+      return
+    }
+
+    try {
+      setMovies(null)
+      setIsSuccess(true)
+      if (inputValue === '') throw new Error('Movie not found')
+      const res = await getListMovies(inputValue.trim())
+
+      if (res.Response === 'False') throw new Error(res.Error)
+      if (!res.Search?.length) throw new Error(`Not found ${inputValue}`)
+
+      setIsSuccess(res.Response === 'True')
+
+      const searchedMovies = moviesMapper(res.Search)
+      setMovies(searchedMovies)
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message)
+        setIsSuccess(false)
+      }
+    }
+  }
+
   useEffect(() => {
     const inputTimeOut = window.setTimeout(async () => {
       startTransition(
-        async () => {
-          if (isEmptyInput.current) {
-            isEmptyInput.current = Boolean(inputValue.trim().length)
-            return
-          }
-
-          try {
-            setMovies(null)
-            setIsSuccess(true)
-            if (inputValue === '') throw new Error('Movie not found')
-            const res = await getListMovies(inputValue.trim())
-
-            if (res.Response === 'False') throw new Error(res.Error)
-            if (!res.Search?.length) throw new Error(`Not found ${inputValue}`)
-
-            setIsSuccess(res.Response === 'True')
-
-            const searchedMovies = moviesMapper(res.Search)
-            setMovies(searchedMovies)
-          } catch (err) {
-            if (err instanceof Error) {
-              setError(err.message)
-              setIsSuccess(false)
-            }
-          }
+        () => {
+          searchMovies()
         }
       )
     }, 800)
