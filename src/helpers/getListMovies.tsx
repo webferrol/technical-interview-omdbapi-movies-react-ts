@@ -1,9 +1,8 @@
+import { API_URL } from '../constants'
 import { Query } from '../types'
 
-const API_KEY = import.meta.env.VITE_API_KEY
-
 export const getListMovies = async (searchValue: string = 'croods') => {
-  const res = await fetch(`http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`)
+  const res = await fetch(`${API_URL}?s=${searchValue}&apikey=${import.meta.env.VITE_API_KEY}`)
   if (!res.ok) {
     throw new Error(`Not found: ${res.status} ${res.statusText}`)
   }

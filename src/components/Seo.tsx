@@ -1,9 +1,10 @@
-function Seo ({ title } : { title: string}) {
+function SearchEngineOptimization ({ title } : { title: string}) {
   return (
         <>
-            <title>{`API omdbapi.com: ${title}`}</title>
+            <title>{`Movies: ${title}`}</title>
+            <meta name="description" content="Open Media Database" />
         </>
   )
 }
 
-export default Seo
+export default SearchEngineOptimization
