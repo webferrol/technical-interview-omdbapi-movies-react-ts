@@ -1,7 +1,6 @@
 import {
   ChangeEvent,
   Suspense,
-  use,
   useEffect,
   useRef,
   useState,
@@ -9,12 +8,8 @@ import {
 } from 'react'
 import SearchEngineOptimization from './components/Seo'
 import { getListMovies } from './helpers/getListMovies'
-import { Query, SearchEntity } from './types'
-
-import imgNotFound from './assets/image-not-found.jpg'
-import { NOT_AVAILABLE } from './constants'
-import NoTargetMovie from './components/NoTargetMovie'
 import Loader from './components/Loader'
+import { ShowMovies } from './components/ShowMovies'
 
 export function OmdbApp () {
   const [query, setQuery] = useState('')
@@ -46,37 +41,5 @@ export function OmdbApp () {
             }
 
         </>
-  )
-}
-
-function ShowMovies ({ moviesQuery } : { moviesQuery: Promise<Query> }) {
-  const query: Query = use(moviesQuery)
-
-  const { Response, Search, Error } = query
-  const isResponse = Response === 'True'
-  return (
-        <section className="movies">
-            {
-                isResponse
-                  ? Search?.map(
-                    (movie) => (
-                        <Movie { ...movie } key={movie.imdbID}/>
-                    )
-                  )
-                  : <NoTargetMovie message={Error} />
-            }
-        </section>
-  )
-}
-
-function Movie ({ Title, Poster }: SearchEntity) {
-  const img = Poster === NOT_AVAILABLE ? imgNotFound : Poster
-  return (
-        <figure>
-            <img src={img} alt={Poster} />
-            <figcaption>
-                {Title}
-            </figcaption>
-        </figure>
   )
 }
