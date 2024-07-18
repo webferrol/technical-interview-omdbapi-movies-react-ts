@@ -20,7 +20,3 @@ export interface Query {
     Response: string;
     Error?: string;
 }
-
-export type PropsQuery = {
-    moviesQuery: Promise<Query>
-}

@@ -28,17 +28,19 @@ export function OmdbApp () {
                 <label htmlFor="query">Título</label>
                 <input id="query" onChange={handleChange} type="search" name="query" placeholder='e.g Matrix' />
             </search>
+            {
+              !firstTime.current && (
+                <Suspense fallback="Loading...">
+                  <ShowMovies moviesQuery={getListMovies(query)} />
+                </Suspense>
+              )
+            }
 
-            <Suspense fallback="Loading...">
-                <ShowMovies moviesQuery={getListMovies(query)} firstTime={firstTime.current}/>
-            </Suspense>
         </>
   )
 }
 
-function ShowMovies ({ moviesQuery, firstTime } : { moviesQuery: Promise<Query>, firstTime: boolean}) {
-  if (firstTime) return
-
+function ShowMovies ({ moviesQuery } : { moviesQuery: Promise<Query> }) {
   const query: Query = use(moviesQuery)
 
   const { Response, Search, Error } = query
