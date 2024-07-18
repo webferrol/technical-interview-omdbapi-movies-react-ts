@@ -6,6 +6,7 @@ import { Query, SearchEntity } from './types'
 import imgNotFound from './assets/image-not-found.jpg'
 import { NOT_AVAILABLE } from './constants'
 import NoTargetMovie from './components/NoTargetMovie'
+import Loader from './components/Loader'
 
 export function OmdbApp () {
   const [query, setQuery] = useState('')
@@ -30,7 +31,7 @@ export function OmdbApp () {
             </search>
             {
               !firstTime.current && (
-                <Suspense fallback="Loading...">
+                <Suspense fallback={<Loader style={{ width: '2rem' }} />}>
                   <ShowMovies moviesQuery={getListMovies(query)} />
                 </Suspense>
               )
