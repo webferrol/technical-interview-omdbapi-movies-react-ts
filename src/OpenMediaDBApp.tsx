@@ -1,4 +1,12 @@
-import { ChangeEvent, Suspense, use, useEffect, useRef, useState, version } from 'react'
+import {
+  ChangeEvent,
+  Suspense,
+  use,
+  useEffect,
+  useRef,
+  useState,
+  version
+} from 'react'
 import SearchEngineOptimization from './components/Seo'
 import { getListMovies } from './helpers/getListMovies'
 import { Query, SearchEntity } from './types'
