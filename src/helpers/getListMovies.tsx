@@ -7,7 +7,7 @@ export const getListMovies = async (searchValue: string = 'croods') => {
     return {
       Search: null,
       Response: 'False',
-      Error: `Not found (Apikey?): ${res.status} ${res.statusText}`
+      Error: `Error ${res.status} ${res.statusText}`
     }
   }
   const data: Query = await res.json()
